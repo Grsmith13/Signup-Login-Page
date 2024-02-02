@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-
 const testAccount = { username: "renaku", password: "varrock" };
 
-const LoginPage = () => {
+const LoginPage = ({ onCancel }) => {
   const userRef = useRef();
-  const errRef = useRef();
+
   /*
     UseState hooks for the users , username and password
     errmsg is for unsuc
@@ -13,7 +12,7 @@ const LoginPage = () => {
   const [pass, setPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     if (success) {
       const timeoutId = setTimeout(() => {}, 3000);
@@ -62,6 +61,12 @@ const LoginPage = () => {
     );
   };
 
+  const handleCancel = () => {
+    setUser("");
+    setPass("");
+    onCancel();
+  };
+
   return (
     <>
       {success && successModal()}
@@ -79,13 +84,20 @@ const LoginPage = () => {
           ></input>
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             onChange={(e) => setPass(e.target.value)}
             value={pass}
             required
-          ></input>
+          />
+
           <button>Submit</button>
         </form>
+        <button onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? "Hide" : "Show"}
+        </button>
+        <button type="button" onClick={handleCancel}>
+          Cancel
+        </button>
       </section>
       <p> {errMsg} </p>
     </>

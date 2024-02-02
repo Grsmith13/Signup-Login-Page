@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import "./NewUserPage.css";
 
-const NewUserPage = () => {
+const NewUserPage = ({ onCancel }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +31,12 @@ const NewUserPage = () => {
     }
   };
 
+  const handleCancel = () => {
+    setUsername("");
+    setPassword("");
+    onCancel();
+  };
+
   return (
     <section className="newUser_form">
       <form onSubmit={handleSubmit}>
@@ -49,10 +56,14 @@ const NewUserPage = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <button>Create Account</button>
       </form>
+      <button type="button" onClick={handleCancel}>
+        Cancel
+      </button>
       <button onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "Hide" : "Show"}{" "}
+        {showPassword ? "Hide" : "Show"}
       </button>
       <p>{welcomeMSG}</p>
       <p>{invalidMsg}</p>
