@@ -1,0 +1,24 @@
+/* This CSS file is to style both the New User form and the Existing form */
+.newUser-form {
+  display: flex;
+  justify-content: center;
+}
+
+.username-section {
+  display: flex;
+  align-items: flex-start;
+}
+
+.password-section {
+  display: flex;
+  align-items: flex-start;
+}
+.password-label,
+.password-field {
+  margin-bottom: 10px;
+}
+
+.account-buttons {
+  display: flex;
+  gap: 1rem;
+}

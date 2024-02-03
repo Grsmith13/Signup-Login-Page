@@ -1,30 +1,36 @@
+/*
+  Component to allow existing users to login to their account.
+  DUE NOTE, at this time there is no proper authentication or any account creation/logging at this time.
+*/
+
 import { useState, useRef, useEffect } from "react";
-const testAccount = { username: "renaku", password: "varrock" };
+import Button from "./Button";
+import "./Form.css";
 
+const testAccount = { username: "renaku", password: "Lumbridge!" }; // preset login info to test the login logic of the app
 const LoginPage = ({ onCancel }) => {
-  const userRef = useRef();
+  const userRef = useRef(); //allows to set the focus on the username
 
-  /*
-    UseState hooks for the users , username and password
-    errmsg is for unsuc
- */
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
+    let timeoutId;
     if (success) {
-      const timeoutId = setTimeout(() => {}, 3000);
-      setSuccess(false);
-      return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount or modal closure
+      timeoutId = setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
     }
+    return () => clearTimeout(timeoutId);
   }, [success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setPass("");
-    if (user == testAccount.username && pass == testAccount.password) {
+    if (user === testAccount.username && pass === testAccount.password) {
       setSuccess(true);
       setUser("");
       setErrMsg("");
@@ -61,6 +67,7 @@ const LoginPage = ({ onCancel }) => {
     );
   };
 
+  // logic for the cancel button to take the user back to the main page as well as clearing the username and password.
   const handleCancel = () => {
     setUser("");
     setPass("");
@@ -69,37 +76,53 @@ const LoginPage = ({ onCancel }) => {
 
   return (
     <>
-      {success && successModal()}
-      <section className="login_form">
+      <p className="top-text">Sign in by entering your username & password.</p>
+      <section className="existing-user-form">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            ref={userRef}
-            autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
-            required
-          ></input>
-          <label htmlFor="password">Password</label>
-          <input
-            type={showPassword ? "text" : "password"}
-            onChange={(e) => setPass(e.target.value)}
-            value={pass}
-            required
-          />
-
-          <button>Submit</button>
+          <div className="username-section">
+            <label htmlFor="username">
+              <strong>Username</strong>:
+            </label>
+            <input
+              type="text"
+              id="username"
+              ref={userRef}
+              autoComplete="off"
+              onChange={(e) => setUser(e.target.value)}
+              value={user}
+              required
+            />
+          </div>
+          <div className="password-section">
+            <label htmlFor="password">
+              <strong>Password</strong>:
+            </label>
+            <input
+              className="password-field"
+              type={showPassword ? "text" : "password"}
+              onChange={(e) => setPass(e.target.value)}
+              value={pass}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="show_button"
+              style={{ background: "darkgrey" }}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+          <div className="account-buttons">
+            <Button>Login</Button>
+            <Button type="button" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
         </form>
-        <button onClick={() => setShowPassword(!showPassword)}>
-          {showPassword ? "Hide" : "Show"}
-        </button>
-        <button type="button" onClick={handleCancel}>
-          Cancel
-        </button>
       </section>
-      <p> {errMsg} </p>
+      {success && successModal()}
+      <p>{errMsg}</p>
     </>
   );
 };
