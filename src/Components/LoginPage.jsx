@@ -5,6 +5,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Button from "./Button";
+
 import "./Form.css";
 
 const testAccount = { username: "renaku", password: "Lumbridge!" }; // preset login info to test the login logic of the app
@@ -16,6 +17,22 @@ const LoginPage = ({ onCancel }) => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const isMobile = () => {
+    let details = navigator.userAgent;
+    let regexp = /android|iphone|kindle|ipad/i;
+    return regexp.test(details);
+  };
+
+  useEffect(() => {
+    if (isMobile()) {
+      const inputElements = document.querySelectorAll("input");
+
+      inputElements.forEach((input) => {
+        input.setAttribute("size", "12");
+      });
+    }
+  }, []);
 
   useEffect(() => {
     let timeoutId;
@@ -39,6 +56,7 @@ const LoginPage = ({ onCancel }) => {
     }
   };
 
+  // Modal for displaying if the user successfully logged in. It will pop u in the screen for three seconds before dissapearing.
   const successModal = () => {
     return (
       <div
@@ -53,15 +71,20 @@ const LoginPage = ({ onCancel }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           backgroundColor: "white",
+          color: "black",
           padding: "20px",
           border: "1px solid #ccc",
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
           zIndex: "999",
+          borderRadius: "8px",
+          maxWidth: "300px",
         }}
       >
         <div className="modal-content">
           <h2 id="modal-title">You are now logged in!</h2>
-          <p id="modal-description">You have successfully logged in.</p>
+          <p id="modal-description">
+            You have successfully logged in good job!
+          </p>
         </div>
       </div>
     );

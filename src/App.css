@@ -1,3 +1,9 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +15,11 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   color: whitesmoke;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  height: 102vh;
+  background-size: 100% 100%;
 }
 
 .app-container {
@@ -36,6 +47,15 @@ body {
   margin-bottom: 20px;
   text-align: center;
 }
+
+/* allows the welcome screen to fit on mobile */
+@media screen and (max-width: 600px) {
+  .welcome-container {
+    width: 80%;
+    padding: 20px;
+    font-size: 16px;
+  }
+}
 /* Styling for the text or instructions in the app */
 .top-text {
   font-size: 18px;
@@ -44,11 +64,6 @@ body {
   font-family: serif;
 }
 
-.Button-container {
-  display: flex;
-  gap: 1rem;
-  margin-top: 20px;
-}
 /* sets the input fields to not and be reminiscent to the Old School Runescape login page. */
 input {
   background: none;
@@ -58,4 +73,10 @@ input {
   font-size: 20px;
   font-weight: bold;
   font-family: monospace;
+}
+
+.Button-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 20px;
 }

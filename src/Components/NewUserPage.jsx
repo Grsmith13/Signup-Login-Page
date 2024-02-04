@@ -3,8 +3,9 @@
   DUE NOTE, this app currently does not create any accounts or stores any information. 
 */
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from "./Button";
+
 import "./Form.css";
 
 const NewUserPage = ({ onCancel }) => {
@@ -14,6 +15,23 @@ const NewUserPage = ({ onCancel }) => {
 
   const [welcomeMSG, setWelcomeMSG] = useState("");
   const [invalidMsg, setInvalidMSG] = useState("");
+
+  const isMobile = () => {
+    let details = navigator.userAgent;
+    let regexp = /android|iphone|kindle|ipad/i;
+    return regexp.test(details);
+  };
+
+  useEffect(() => {
+    if (isMobile()) {
+      const inputElements = document.querySelectorAll("input");
+
+      // Adjust the size attribute for input fields on mobile
+      inputElements.forEach((input) => {
+        input.setAttribute("size", "12");
+      });
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,9 +73,7 @@ const NewUserPage = ({ onCancel }) => {
 
   return (
     <>
-      <p className="top-text" style={{ color: "yellow" }}>
-        Sign up by entering a username & password.
-      </p>
+      <p className="top-text">Sign up by entering a username & password.</p>
       <section className="newUser-form">
         <form onSubmit={handleSubmit}>
           <div className="username-section">
@@ -78,7 +94,7 @@ const NewUserPage = ({ onCancel }) => {
               <strong>Password</strong>:
             </label>
             <input
-              title="Password must contain at least 9 characters, a capital character , and a special character."
+              title="Password must contain: at least 9 characters, a capital character , and a special character."
               className="password-field"
               type={showPassword ? "text" : "password"}
               id="password"

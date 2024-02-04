@@ -1,3 +1,9 @@
+/*
+  Gage Smith
+  2/3/2024
+  Nostalgic Account Page
+*/
+
 import { useState } from "react";
 import NewUserPage from "./Components/NewUserPage";
 import LoginPage from "./Components/LoginPage";
@@ -39,7 +45,7 @@ const App = () => {
   return (
     <div className="app-container">
       {showWelcome && (
-        <div className="welcome-container" style={{ width: "15%" }}>
+        <div className="welcome-container">
           <p className="top-text">Welcome to my webpage</p>
           {/*
             New user  opens the NewUserPage component for the user to create an account.
@@ -56,7 +62,7 @@ const App = () => {
         </div>
       )}
       {showNewUserPage && (
-        <div className="login-container newUser-container">
+        <div className="newUser-container">
           <NewUserPage onCancel={cancelForm} />
         </div>
       )}

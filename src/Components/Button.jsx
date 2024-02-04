@@ -2,8 +2,6 @@
     Button component with inline styling to simply files and make a reusable button format for the app.
 */
 
-import React from "react";
-
 const Button = ({ onClick, children }) => {
   const buttonStyles = {
     background: "rgb(87,90,101)",
@@ -19,8 +17,14 @@ const Button = ({ onClick, children }) => {
     width: "55%",
   };
 
+  const mobileStyle = {};
+
   return (
-    <button className="custom-button" style={buttonStyles} onClick={onClick}>
+    <button
+      className="custom-button"
+      style={buttonStyles} // c
+      onClick={onClick}
+    >
       {children}
     </button>
   );
